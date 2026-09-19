@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burger Crafts | Menu</title>
+<style>
+  :root {
+    --gold: #c8a655;
+    --dark: #161512;
+    --dark-light: #211f1c;
+    --cream: #f8f4ec;
+    --text-muted: #a9a294;
+    --border-soft: rgba(200,166,85,0.25);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--dark);
+    color: var(--cream);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  header.hero {
+    text-align: center;
+    padding: 50px 20px 30px;
+    border-bottom: 1px solid var(--border-soft);
+    background: linear-gradient(180deg, rgba(200,166,85,0.06), transparent);
+  }
+
+  .restaurant-name {
+    font-size: 2.4rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .restaurant-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 18px;
+    font-style: italic;
+  }
+
+  .restaurant-phone {
+    display: inline-block;
+    font-size: 0.95rem;
+    color: var(--cream);
+    border: 1px solid var(--border-soft);
+    padding: 8px 18px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+  }
+
+  .restaurant-phone::before {
+    content: "☎ ";
+    color: var(--gold);
+  }
+
+  /* Language Switcher */
+  .lang-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0 10px;
+  }
+
+  .lang-btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 22px;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+
+  .lang-btn.active,
+  .lang-btn:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* Menu Sections */
+  .menu-section {
+    margin-top: 40px;
+  }
+
+  #menu-en, #menu-ar {
+    display: none;
+  }
+
+  #menu-en.active, #menu-ar.active {
+    display: block;
+  }
+
+  .menu-category {
+    margin-bottom: 42px;
+  }
+
+  .category-title {
+    font-size: 1.4rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 26px;
+    padding-bottom: 12px;
+  }
+
+  .category-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 10px auto 0;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--border-soft);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-info {
+    flex: 1;
+  }
+
+  .item-name {
+    font-size: 1.08rem;
+    color: var(--cream);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .item-description {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+    max-width: 480px;
+  }
+
+  .item-price {
+    font-size: 1.05rem;
+    color: var(--gold);
+    font-weight: 700;
+    white-space: nowrap;
+    padding-left: 10px;
+  }
+
+  /* RTL Support */
+  html[dir="rtl"] body {
+    font-family: 'Tahoma', 'Segoe UI', sans-serif;
+  }
+
+  [dir="rtl"] .item-price {
+    padding-left: 0;
+    padding-right: 10px;
+  }
+
+  [dir="rtl"] .menu-item {
+    flex-direction: row-reverse;
+  }
+
+  /* Search (disabled by default in this template) */
+  #searchWrapper {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 10px;
+  }
+
+  #menuSearch {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    border: 1px solid var(--border-soft);
+    background: var(--dark-light);
+    color: var(--cream);
+    font-size: 0.95rem;
+    outline: none;
+  }
+
+  #menuSearch::placeholder {
+    color: var(--text-muted);
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px 20px 10px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-soft);
+    margin-top: 40px;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 600px) {
+    .restaurant-name {
+      font-size: 1.9rem;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+    }
+
+    .item-name {
+      font-size: 1rem;
+    }
+
+    .item-price {
+      font-size: 0.98rem;
+    }
+
+    .container {
+      padding: 0 14px 40px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1 class="restaurant-name">Burger Crafts</h1>
+  <p class="restaurant-description">Gourmet smash burgers, sides, and refreshing drinks crafted fresh daily.</p>
+  <div class="restaurant-phone">7584754377</div>
+
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLang('en')">English</button>
+    <button class="lang-btn" onclick="switchLang('ar')">العربية</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <section id="menu-en" class="menu-section active" dir="ltr">
+    <!-- MENU_EN_START -->
+<div id="menuEnglish" class="menu-container"><section class="menu-category" data-category="Main Menu" style="margin:28px 0;"><h2 class="category-title" style="font-size:1.35rem;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #b8860b;color:inherit;">Main Menu</h2><div class="category-items" style="display:flex;flex-direction:column;gap:12px;"><article class="menu-item" data-search="main menu classic beef burger 8.50 150g beef patty, cheddar, lettuce, craft sauce" dir="ltr" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">Classic Beef Burger</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">150g beef patty, cheddar, lettuce, craft sauce</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">8.50</div></div></article><article class="menu-item" data-search="main menu crispy chicken burger 7.50 fried chicken breast, coleslaw, spicy mayo" dir="ltr" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">Crispy Chicken Burger</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">Fried chicken breast, coleslaw, spicy mayo</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">7.50</div></div></article><article class="menu-item" data-search="main menu truffle fries 3.50 crispy fries with truffle oil and parmesan" dir="ltr" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">Truffle Fries</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">Crispy fries with truffle oil and parmesan</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">3.50</div></div></article><article class="menu-item" data-search="main menu soft drink 1.50 choice of cola, sprite, or fanta" dir="ltr" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">Soft Drink</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">Choice of Cola, Sprite, or Fanta</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">1.50</div></div></article></div></section></div>
+<!-- MENU_EN_END -->
+  </section>
+
+  <section id="menu-ar" class="menu-section" dir="rtl">
+    <!-- MENU_AR_START -->
+<div id="menuArabic" class="menu-container" style="display:none;" dir="rtl"><section class="menu-category" data-category="Main Menu" style="margin:28px 0;"><h2 class="category-title" style="font-size:1.35rem;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #b8860b;color:inherit;">Main Menu</h2><div class="category-items" style="display:flex;flex-direction:column;gap:12px;"><article class="menu-item" data-search="main menu برغر اللحم الكلاسيكي 8.50 شريحة لحم بقري 150 غرام، جبن شيدر، خس، صلصة كرافت الخاصة" dir="rtl" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">برغر اللحم الكلاسيكي</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">شريحة لحم بقري 150 غرام، جبن شيدر، خس، صلصة كرافت الخاصة</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">8.50</div></div></article><article class="menu-item" data-search="main menu برغر الدجاج المقرمش 7.50 صدر دجاج مقلي، سلطة ملفوف، مايونيز حار" dir="rtl" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">برغر الدجاج المقرمش</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">صدر دجاج مقلي، سلطة ملفوف، مايونيز حار</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">7.50</div></div></article><article class="menu-item" data-search="main menu بطاطس الترفل 3.50 بطاطس مقرمشة بزيت الكمأة وجبنة البارميزان" dir="rtl" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">بطاطس الترفل</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">بطاطس مقرمشة بزيت الكمأة وجبنة البارميزان</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">3.50</div></div></article><article class="menu-item" data-search="main menu مشروب غازي 1.50 خيارك من كولا، سبرايت، أو فانتا" dir="rtl" style="border:1px solid rgba(148,163,184,0.25);border-radius:12px;padding:16px;background:rgba(255,255,255,0.03);"><div class="item-main" style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;"><div class="item-info" style="flex:1;min-width:0;"><h3 class="item-name" style="margin:0 0 6px 0;font-size:1.1rem;font-weight:600;">مشروب غازي</h3><p class="item-description" style="margin:0;font-size:0.88rem;opacity:0.78;line-height:1.45;">خيارك من كولا، سبرايت، أو فانتا</p></div><div class="item-price" style="font-weight:700;font-size:1.05rem;white-space:nowrap;color:#b8860b;">1.50</div></div></article></div></section></div>
+<!-- MENU_AR_END -->
+  </section>
+
+</div>
+
+<footer>
+  &copy; Burger Crafts. All rights reserved.
+</footer>
+
+<script>
+  function switchLang(lang) {
+    const en = document.getElementById('menu-en');
+    const ar = document.getElementById('menu-ar');
+    const buttons = document.querySelectorAll('.lang-btn');
+
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    if (lang === 'en') {
+      en.classList.add('active');
+      ar.classList.remove('active');
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+      buttons[0].classList.add('active');
+    } else {
+      ar.classList.add('active');
+      en.classList.remove('active');
+      document.documentElement.setAttribute('dir', 'rtl');
+      document.documentElement.setAttribute('lang', 'ar');
+      buttons[1].classList.add('active');
+    }
+  }
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var currentLang = "en";
+  var isSearchEnabled = false;
+  var searchInput = document.getElementById("menuSearch");
+  var searchWrapper = document.getElementById("searchWrapper");
+
+  function performSearch() {
+    if (!searchInput || !isSearchEnabled) return;
+    var q = searchInput.value.toLowerCase().trim();
+    var activeMenu = (currentLang === "ar") ? document.getElementById("menuArabic") : document.getElementById("menuEnglish");
+    if (!activeMenu) return;
+    var items = activeMenu.querySelectorAll(".menu-item");
+    var categories = activeMenu.querySelectorAll(".menu-category");
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i];
+      var text = (item.getAttribute("data-search") || item.textContent || "").toLowerCase();
+      item.style.display = (q === "" || text.indexOf(q) !== -1) ? "" : "none";
+    }
+    for (var j = 0; j < categories.length; j++) {
+      var category = categories[j];
+      var visibleItems = category.querySelectorAll(".menu-item");
+      var hasVisible = false;
+      for (var k = 0; k < visibleItems.length; k++) {
+        if (visibleItems[k].style.display !== "none") {
+          hasVisible = true;
+          break;
+        }
+      }
+      category.style.display = hasVisible ? "" : "none";
+    }
+  }
+
+  if (!isSearchEnabled) {
+    if (searchWrapper) searchWrapper.style.display = "none";
+    if (searchInput) searchInput.style.display = "none";
+  } else if (searchInput) {
+    searchInput.addEventListener("input", performSearch);
+  }
+
+  window.setMenuLanguage = function(lang) {
+    currentLang = lang;
+    var en = document.getElementById("menuEnglish");
+    var ar = document.getElementById("menuArabic");
+    if (!en || !ar) return;
+    if (lang === "ar") {
+      en.style.display = "none";
+      ar.style.display = "block";
+      document.documentElement.dir = "rtl";
+    } else {
+      ar.style.display = "none";
+      en.style.display = "block";
+      document.documentElement.dir = "ltr";
+    }
+    if (searchInput && isSearchEnabled) {
+      searchInput.value = "";
+      performSearch();
+      searchInput.placeholder = (lang === "ar") ? "ابحث في القائمة..." : "Search menu...";
+    }
+    var buttons = document.querySelectorAll("[data-lang]");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.toggle("active", buttons[i].getAttribute("data-lang") === lang);
+    }
+  };
+
+  var buttons = document.querySelectorAll("[data-lang]");
+  for (var b = 0; b < buttons.length; b++) {
+    buttons[b].addEventListener("click", function(e) {
+      e.preventDefault();
+      var target = this.getAttribute("data-lang");
+      window.setMenuLanguage(target);
+    });
+  }
+});
+</script>
+</body>
+</html>
